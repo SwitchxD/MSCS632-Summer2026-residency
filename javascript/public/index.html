@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collaborative To-Do List Application</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">MSCS632 JavaScript Project</p>
+            <h1>Collaborative To-Do List Application</h1>
+          </div>
+          <label class="user-picker">
+            <span>Current User</span>
+            <select id="currentUserSelect" aria-label="Current user"></select>
+          </label>
+        </header>
+
+        <section class="task-form-panel" aria-labelledby="addTaskHeading">
+          <h2 id="addTaskHeading">Add Task</h2>
+          <form id="addTaskForm" class="task-form">
+            <label>
+              <span>Task Name</span>
+              <input id="taskNameInput" name="taskName" type="text" required />
+            </label>
+            <label>
+              <span>Category</span>
+              <select id="categorySelect" name="category" required></select>
+            </label>
+            <label>
+              <span>Assign To</span>
+              <select id="assignedUserSelect" name="assignedUser" required></select>
+            </label>
+            <button type="submit">Add Task</button>
+          </form>
+        </section>
+
+        <section class="task-list-panel" aria-labelledby="taskListHeading">
+          <div class="section-heading">
+            <h2 id="taskListHeading">My Tasks</h2>
+            <button id="refreshTasksButton" type="button">Refresh</button>
+          </div>
+          <div id="taskList" class="task-list"></div>
+        </section>
+
+        <section class="concurrency-panel" aria-labelledby="concurrencyHeading">
+          <div>
+            <h2 id="concurrencyHeading">Concurrency</h2>
+            <p>Simulate Charan, Lokesh, and Jay creating tasks together.</p>
+          </div>
+          <button id="runConcurrencyButton" type="button">
+            Run Simulation
+          </button>
+        </section>
+
+        <section class="log-panel" aria-labelledby="logHeading">
+          <div class="section-heading">
+            <h2 id="logHeading">Activity Log</h2>
+            <button id="clearLogButton" type="button">Clear</button>
+          </div>
+          <div id="activityLog" class="activity-log" aria-live="polite"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="/client.js" type="module"></script>
+  </body>
+</html>
