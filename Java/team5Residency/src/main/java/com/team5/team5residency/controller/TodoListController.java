@@ -22,13 +22,13 @@ public class TodoListController {
     @PostMapping
     public ResponseEntity<TaskEntity> addTask(@RequestParam String userName,
                                               @RequestParam String taskName,
-                                              @RequestParam String category) {
+                                              @RequestParam String category) throws InterruptedException {
         return ResponseEntity.status(HttpStatus.CREATED).body(todoListService.addTask(userName, taskName, category));
     }
 
     // GET /api/tasks?userName=alice
     @GetMapping
-    public ResponseEntity<List<TaskEntity>> getTasks(@RequestParam String userName) {
+    public ResponseEntity<List<TaskEntity>> getTasks(@RequestParam String userName) throws InterruptedException {
         return ResponseEntity.ok(todoListService.getTasksForUser(userName));
     }
 
