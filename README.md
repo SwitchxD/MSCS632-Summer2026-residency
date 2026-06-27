@@ -2,3 +2,4 @@
 Team 5 repository for MSCS632 summer 2026 residency assignments
 
 - [Java Implementation](Java/README.md)
+- [JavaScript Implementation](javascript/public/README.md)
