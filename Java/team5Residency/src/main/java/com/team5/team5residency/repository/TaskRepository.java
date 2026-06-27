@@ -8,11 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface TaskRepository extends JpaRepository<TaskEntity, Long> {
+public interface TaskRepository extends JpaRepository<TaskEntity, Integer> {
 
     List<TaskEntity> findByUsername(String userName);
 
     Optional<TaskEntity> findByIdAndUsername(int id, String userId);
-
-    TaskEntity findById(int Id);
 }

@@ -2,6 +2,7 @@ package com.team5.team5residency.service;
 
 import com.team5.team5residency.entity.TaskEntity;
 import com.team5.team5residency.repository.TaskRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ public class TodoListService {
 
     private final TaskRepository taskRepository;
 
+    @Transactional
     public TaskEntity addTask(String userName, String taskName, String category) {
         TaskEntity task = new TaskEntity();
         task.setUsername(userName);
@@ -34,11 +36,8 @@ public class TodoListService {
     }
 
     public void deleteTask(int taskId) throws Exception {
-        try {
-            TaskEntity task = taskRepository.findById(taskId);
-            taskRepository.delete(task);
-        } catch (Exception e) {
-            throw new Exception("Failed to find the task ID");
-        }
+        TaskEntity task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new Exception("Failed to find the task ID"));
+        taskRepository.delete(task);
     }
 }

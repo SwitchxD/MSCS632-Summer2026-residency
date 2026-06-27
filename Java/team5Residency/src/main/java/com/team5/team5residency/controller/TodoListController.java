@@ -1,6 +1,7 @@
 package com.team5.team5residency.controller;
 
 import com.team5.team5residency.entity.TaskEntity;
+import com.team5.team5residency.repository.TaskRepository;
 import com.team5.team5residency.service.TodoListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.List;
 public class TodoListController {
 
     private final TodoListService todoListService;
+    private final TaskRepository taskRepository;
 
     // POST /api/tasks?userName=alice&taskName=Buy groceries&category=Personal
     @PostMapping
@@ -38,10 +40,10 @@ public class TodoListController {
         return ResponseEntity.ok(todoListService.updateStatus(userName, taskId, status));
     }
 
-    // DELETE /api/tasks/{taskId}?userName=alice
+    // DELETE /api/tasks/{taskId}
     @DeleteMapping("/{taskId}")
-    public ResponseEntity<Void> deleteTask(@PathVariable int taskId) throws Exception {
+    public ResponseEntity<String> deleteTask(@PathVariable int taskId) throws Exception {
         todoListService.deleteTask(taskId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Successfully deleted record with Task ID: " + taskId);
     }
 }
