@@ -1,24 +1,47 @@
 package com.team5.team5residency.controller;
 
+import com.team5.team5residency.entity.TaskEntity;
 import com.team5.team5residency.service.TodoListService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import lombok.extern.log4j.Log4j2;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/api")
-@Log4j2
+@RequestMapping("/api/tasks")
+@RequiredArgsConstructor
 public class TodoListController {
 
-    @Autowired
-    TodoListService todoListService;
+    private final TodoListService todoListService;
 
-    @GetMapping(path = "/healthCheck")
-    public String test (){
-        String response = todoListService.healthCheck();
-        log.info("Test controller run success");
-        return response;
+    // POST /api/tasks?userName=alice&taskName=Buy groceries&category=Personal
+    @PostMapping
+    public ResponseEntity<TaskEntity> addTask(@RequestParam String userName,
+                                              @RequestParam String taskName,
+                                              @RequestParam String category) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(todoListService.addTask(userName, taskName, category));
+    }
+
+    // GET /api/tasks?userName=alice
+    @GetMapping
+    public ResponseEntity<List<TaskEntity>> getTasks(@RequestParam String userName) {
+        return ResponseEntity.ok(todoListService.getTasksForUser(userName));
+    }
+
+    // PUT /api/tasks/{taskId}/status?userName=alice&status=COMPLETED
+    @PutMapping("/{taskId}/status")
+    public ResponseEntity<TaskEntity> updateStatus(@PathVariable int taskId,
+                                                   @RequestParam String userName,
+                                                   @RequestParam String status) {
+        return ResponseEntity.ok(todoListService.updateStatus(userName, taskId, status));
+    }
+
+    // DELETE /api/tasks/{taskId}?userName=alice
+    @DeleteMapping("/{taskId}")
+    public ResponseEntity<Void> deleteTask(@PathVariable int taskId) throws Exception {
+        todoListService.deleteTask(taskId);
+        return ResponseEntity.noContent().build();
     }
 }
